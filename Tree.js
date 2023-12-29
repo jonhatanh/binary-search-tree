@@ -5,8 +5,27 @@ export default class Tree {
 
   constructor(array) {
     this.#root = this.#buildTree(array);
-    this.prettyPrint(this.#root);
+    Tree.prettyPrint(this.#root);
   }
+
+  insert(value) {
+
+  }
+
+  find(value) {
+    return this.#recursiveFind(this.#root, value);
+  }
+  #recursiveFind(root, value) {
+    if(root === null) return null;
+    if(root.value === value) return root;
+    if(value < root.value) {
+        return this.#recursiveFind(root.left, value);
+    } else {
+        return this.#recursiveFind(root.right, value);
+    }
+  }
+
+
 
   #buildTree(array) {
     const sortedArray = [...new Set(array)].sort((a, b) => a - b);
@@ -25,16 +44,20 @@ export default class Tree {
     return root;
   }
 
-  prettyPrint(node, prefix = "", isLeft = true) {
+  static prettyPrint(node, prefix = "", isLeft = true) {
     if (node === null) {
       return;
     }
     if (node.right !== null) {
-      this.prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
+      Tree.prettyPrint(
+        node.right,
+        `${prefix}${isLeft ? "│   " : "    "}`,
+        false
+      );
     }
     console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.value}`);
     if (node.left !== null) {
-      this.prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
+      Tree.prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
     }
   }
 }

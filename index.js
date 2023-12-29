@@ -1,24 +1,24 @@
 import readlineSync from "readline-sync";
 import chalk from "chalk";
+import Tree from "./Tree.js";
 
 const log = console.log;
-// const list = new LinkedList();
+const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 const getMenu = () => {
   return `
 ${chalk.white.bgBlue("-- BST Options --")}
 ${chalk.bold("BST array")}: ${chalk.blue("---")}
-1.- append.
-2.- prepend.
-3.- size.
-4.- head.
-5.- tail.
-6.- at(index).
-7.- pop.
-8.- contains(value).
-9.- find.
-10.- toString.
-11.- insertAt.
-12.- removeAt.
+1.- insert.
+2.- delete.
+3.- find.
+4.- levelOrder.
+5.- inOrder.
+6.- preOrder.
+7.- postOrder.
+8.- height.
+9.- depth.
+10.- isBalanced.
+11.- rebalance.
 13.- clear.
 0.- exit.
 `;
@@ -30,6 +30,7 @@ const optionsMap = {
     exit = true;
     console.log("Bye!");
   },
+  1() {},
   // 1() {
   //   const value = readlineSync.question("Value: ");
   //   list.append(value);
@@ -40,9 +41,15 @@ const optionsMap = {
   //   list.prepend(value);
   //   log(chalk.yellow("Item Added"));
   // },
-  // 3() {
-  //   log(chalk.yellow(list.size()));
-  // },
+  3() {
+    const value = toNumber(readlineSync.question("Value: "));
+    if (value === null) {
+      log(chalk.red('Wrong input, please enter a valid number'))
+      return;
+    }
+    const node = tree.find(value);
+    node === null ? log(chalk.red("Node not found")) : log(chalk.yellow(node));
+  },
   // 4() {
   //   log(chalk.yellow(list.head()?.value ?? null));
   // },
@@ -108,4 +115,9 @@ while (exit === false) {
     continue;
   }
   optionsMap[option]();
+}
+
+function toNumber(value) {
+  const number = Number(value);
+  return Number.isNaN(number) ? null : number;
 }
