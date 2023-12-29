@@ -8,8 +8,35 @@ export default class Tree {
     Tree.prettyPrint(this.#root);
   }
 
-  insert(value) {
+  get root() {
+    return this.#root;
+  }
 
+  insert(value) {
+    if(this.find(value) !== null) return false;
+    if(this.#root === null) {
+      this.#root = new Node(value);
+      return true;
+    }
+
+    let auxNode = this.#root;
+    const newNode = new Node(value);
+    while(auxNode != null) {
+      if(value < auxNode.value) {
+        if(auxNode.left === null) {
+          auxNode.left = newNode;
+          break;
+        }
+        auxNode = auxNode.left;
+      } else {
+        if(auxNode.right === null) {
+          auxNode.right = newNode;
+          break;
+        }
+        auxNode = auxNode.right;
+      }
+    }
+    return auxNode !== null
   }
 
   find(value) {

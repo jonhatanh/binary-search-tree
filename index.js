@@ -19,6 +19,7 @@ ${chalk.bold("BST array")}: ${chalk.blue("---")}
 9.- depth.
 10.- isBalanced.
 11.- rebalance.
+12.- prettyPrint.
 13.- clear.
 0.- exit.
 `;
@@ -30,12 +31,15 @@ const optionsMap = {
     exit = true;
     console.log("Bye!");
   },
-  1() {},
-  // 1() {
-  //   const value = readlineSync.question("Value: ");
-  //   list.append(value);
-  //   log(chalk.yellow("Item Added"));
-  // },
+  1() {
+    const value = toNumber(readlineSync.question("Value: "));
+    if (value === null) {
+      log(chalk.red("Wrong input, please enter a valid number"));
+      return;
+    }
+    if (tree.insert(value)) log(chalk.yellow("Node Added"));
+    else log(chalk.yellow("Error adding node"));
+  },
   // 2() {
   //   const value = readlineSync.question("Value: ");
   //   list.prepend(value);
@@ -44,7 +48,7 @@ const optionsMap = {
   3() {
     const value = toNumber(readlineSync.question("Value: "));
     if (value === null) {
-      log(chalk.red('Wrong input, please enter a valid number'))
+      log(chalk.red("Wrong input, please enter a valid number"));
       return;
     }
     const node = tree.find(value);
@@ -94,13 +98,14 @@ const optionsMap = {
   //   list.insertAt(value, index);
   //   log(chalk.yellow("Item Added"));
   // },
-  // 12() {
-  //   const index = readlineSync.question("At index: ");
-  //   const removed = list.removeAt(index);
-  //   removed
-  //     ? log(chalk.yellow("Item Removed"))
-  //     : log(chalk.red("Invalid Index"));
-  // },
+  12() {
+    Tree.prettyPrint(tree.root);
+    // const index = readlineSync.question("At index: ");
+    // const removed = list.removeAt(index);
+    // removed
+    //   ? log(chalk.yellow("Item Removed"))
+    //   : log(chalk.red("Invalid Index"));
+  },
   // 13() {
   //   list.clear();
   //   log(chalk.red.bgMagenta('Done!'))
