@@ -40,11 +40,18 @@ const optionsMap = {
     if (tree.insert(value)) log(chalk.yellow("Node Added"));
     else log(chalk.yellow("Error adding node"));
   },
-  // 2() {
-  //   const value = readlineSync.question("Value: ");
-  //   list.prepend(value);
-  //   log(chalk.yellow("Item Added"));
-  // },
+  2() {
+    const value = toNumber(readlineSync.question("Value: "));
+    if (value === null) {
+      log(chalk.red("Wrong input, please enter a valid number"));
+      return;
+    }
+    const deleted = tree.delete(value);
+    deleted
+     ? log(chalk.yellow("Item Deleted"))
+     : log(chalk.red("Item not found"))
+    
+  },
   3() {
     const value = toNumber(readlineSync.question("Value: "));
     if (value === null) {

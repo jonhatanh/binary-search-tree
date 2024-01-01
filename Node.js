@@ -11,6 +11,10 @@ export default class Node {
     return this.#value;
   }
 
+  set value(val) {
+    this.#value = val;
+  }
+
   toString() {
     return `
 Node value: ${this.#value}
