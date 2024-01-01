@@ -1,5 +1,5 @@
 import Node from "./Node.js";
-
+import Queue from "./Queue.js";
 export default class Tree {
   #root = null;
 
@@ -59,7 +59,7 @@ export default class Tree {
       parent[position] = child.right;
     } else {
       //both childs
-      const nextBiggest = this.#findNextBiggest(child);
+      const nextBiggest = this.#findBiggest(child);
       this.delete(nextBiggest.value);
       child.value = nextBiggest.value;
       return true;
@@ -67,12 +67,12 @@ export default class Tree {
   }
   #deleteRoot() {
     const newRoot =
-      this.#findNextBiggest(this.#root) ?? this.#findPrevBiggest(this.#root);
+      this.#findBiggest(this.#root) ?? this.#findBiggest(this.#root, false);
     if (newRoot) {
       this.delete(newRoot.value);
       this.#root.value = newRoot.value;
     } else {
-      this.#root === null;
+      this.#root = null;
     }
     return true;
   }
@@ -97,22 +97,31 @@ export default class Tree {
     return false;
   }
 
-  #findNextBiggest(node) {
-    let nextBiggest = node.right;
+  #findBiggest(node, toRight = true) {
+    let nextBiggest = node[toRight ? "right" : "left"];
     if (nextBiggest === null) return null;
-    while (nextBiggest.left !== null) {
-      nextBiggest = nextBiggest.left;
+    const contraryDirection = toRight ? "left" : "right";
+    while (nextBiggest[contraryDirection] !== null) {
+      nextBiggest = nextBiggest[contraryDirection];
     }
     return nextBiggest;
   }
-  #findPrevBiggest(node) {
-    let prevBiggest = node.left;
-    if (prevBiggest === null) return null;
-    while (prevBiggest.right !== null) {
-      prevBiggest = prevBiggest.right;
-    }
-    return prevBiggest;
-  }
+  // #findNextBiggest(node) {
+  //   let nextBiggest = node.right;
+  //   if (nextBiggest === null) return null;
+  //   while (nextBiggest.left !== null) {
+  //     nextBiggest = nextBiggest.left;
+  //   }
+  //   return nextBiggest;
+  // }
+  // #findPrevBiggest(node) {
+  //   let prevBiggest = node.left;
+  //   if (prevBiggest === null) return null;
+  //   while (prevBiggest.right !== null) {
+  //     prevBiggest = prevBiggest.right;
+  //   }
+  //   return prevBiggest;
+  // }
 
   find(value) {
     return this.#recursiveFind(this.#root, value);
@@ -142,6 +151,21 @@ export default class Tree {
     root.left = this.#recursiveBuildTree(array.slice(0, mid));
     root.right = this.#recursiveBuildTree(array.slice(mid + 1));
     return root;
+  }
+
+  levelOrder() {
+    if(!this.#root) return [];
+    const nodes = [this.#root];
+    const nodesQueue = new Queue();
+    nodesQueue.add(this.#root.left);
+    nodesQueue.add(this.#root.right);
+    while (!nodesQueue.empty()) {
+      const currentNode = nodesQueue.remove();
+      nodesQueue.add(currentNode.left);
+      nodesQueue.add(currentNode.right);
+      nodes.push(currentNode);
+    }
+    return nodes;
   }
 
   static prettyPrint(node, prefix = "", isLeft = true) {

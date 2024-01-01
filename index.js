@@ -61,9 +61,13 @@ const optionsMap = {
     const node = tree.find(value);
     node === null ? log(chalk.red("Node not found")) : log(chalk.yellow(node));
   },
-  // 4() {
-  //   log(chalk.yellow(list.head()?.value ?? null));
-  // },
+  4() {
+    const nodes = tree.levelOrder();
+    nodes.forEach(node => {
+      process.stdout.write(chalk.yellow(node.value + " "));
+    })
+    // log(chalk.yellow(list.head()?.value ?? null));
+  },
   // 5() {
   //   log(chalk.yellow(list.tail()?.value ?? null));
   // },
