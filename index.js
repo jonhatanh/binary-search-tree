@@ -63,15 +63,28 @@ const optionsMap = {
   },
   4() {
     const nodes = tree.levelOrder();
-    // const nodes = tree.recursiveLevelOrder();
     nodes.forEach(node => {
       process.stdout.write(chalk.yellow(node.value + " "));
     })
-    // log(chalk.yellow(list.head()?.value ?? null));
   },
-  // 5() {
-  //   log(chalk.yellow(list.tail()?.value ?? null));
-  // },
+  5() {
+    const nodes = tree.inOrder();
+    nodes.forEach(node => {
+      process.stdout.write(chalk.yellow(node.value + " "));
+    })
+  },
+  6() {
+    const nodes = tree.preOrder();
+    nodes.forEach(node => {
+      process.stdout.write(chalk.yellow(node.value + " "));
+    })
+  },
+  7() {
+    const nodes = tree.postOrder();
+    nodes.forEach(node => {
+      process.stdout.write(chalk.yellow(node.value + " "));
+    })
+  },
   // 6() {
   //   const index = readlineSync.question("Node index: ");
   //   const numberIndex = Number(index);

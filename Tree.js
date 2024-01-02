@@ -154,7 +154,7 @@ export default class Tree {
   }
 
   levelOrder() {
-    if(!this.#root) return [];
+    if (!this.#root) return [];
     const nodes = [this.#root];
     const nodesQueue = new Queue();
     nodesQueue.add(this.#root.left);
@@ -169,19 +169,41 @@ export default class Tree {
   }
 
   recursiveLevelOrder() {
-    if(!this.#root) return [];
+    if (!this.#root) return [];
     const nodesQueue = new Queue();
     nodesQueue.add(this.#root);
     return this.#recursiveLvlOrder(nodesQueue);
   }
 
   #recursiveLvlOrder(queue, nodes = []) {
-    if(queue.empty()) return nodes;
+    if (queue.empty()) return nodes;
     const currentNode = queue.remove();
     queue.add(currentNode.left);
     queue.add(currentNode.right);
     nodes.push(currentNode);
     return this.#recursiveLvlOrder(queue, nodes);
+  }
+
+  preOrder(node = this.#root, nodes = []) {
+    if (node === null) return;
+    nodes.push(node);
+    this.preOrder(node.left, nodes);
+    this.preOrder(node.right, nodes);
+    return nodes;
+  }
+  inOrder(node = this.#root, nodes = []) {
+    if (node === null) return;
+    this.inOrder(node.left, nodes);
+    nodes.push(node);
+    this.inOrder(node.right, nodes);
+    return nodes;
+  }
+  postOrder(node = this.#root, nodes = []) {
+    if (node === null) return;
+    this.postOrder(node.left, nodes);
+    this.postOrder(node.right, nodes);
+    nodes.push(node);
+    return nodes;
   }
 
   static prettyPrint(node, prefix = "", isLeft = true) {
