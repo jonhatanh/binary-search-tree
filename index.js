@@ -48,9 +48,8 @@ const optionsMap = {
     }
     const deleted = tree.delete(value);
     deleted
-     ? log(chalk.yellow("Item Deleted"))
-     : log(chalk.red("Item not found"))
-    
+      ? log(chalk.yellow("Item Deleted"))
+      : log(chalk.red("Item not found"));
   },
   3() {
     const value = toNumber(readlineSync.question("Value: "));
@@ -63,27 +62,27 @@ const optionsMap = {
   },
   4() {
     const nodes = tree.levelOrder();
-    nodes.forEach(node => {
+    nodes.forEach((node) => {
       process.stdout.write(chalk.yellow(node.value + " "));
-    })
+    });
   },
   5() {
     const nodes = tree.inOrder();
-    nodes.forEach(node => {
+    nodes.forEach((node) => {
       process.stdout.write(chalk.yellow(node.value + " "));
-    })
+    });
   },
   6() {
     const nodes = tree.preOrder();
-    nodes.forEach(node => {
+    nodes.forEach((node) => {
       process.stdout.write(chalk.yellow(node.value + " "));
-    })
+    });
   },
   7() {
     const nodes = tree.postOrder();
-    nodes.forEach(node => {
+    nodes.forEach((node) => {
       process.stdout.write(chalk.yellow(node.value + " "));
-    })
+    });
   },
   // 6() {
   //   const index = readlineSync.question("Node index: ");
@@ -107,13 +106,19 @@ const optionsMap = {
   //     ? log(chalk.yellow("The item exists in the list"))
   //     : log(chalk.red("The item doesn't exists in the list"));
   // },
-  // 9() {
-  //   const value = readlineSync.question("Node value: ");
-  //   const index = list.find(value);
-  //   index === null
-  //     ? log(chalk.red("Item not found"))
-  //     : log(chalk.yellow(`The item is at index: ${index}`));
-  // },
+  9() {
+    const value = toNumber(readlineSync.question("Node value: "));
+    if (value === null) {
+      log(chalk.red("Wrong input, please enter a valid number"));
+      return;
+    }
+    const depth = tree.depth(value);
+    if (depth === null) {
+      log(chalk.red("Item not found"));
+      return;
+    }
+    log(chalk.yellow(`The item is at depth: ${depth}`));
+  },
   // 10() {
   //   log(chalk.yellow(list.toString()));
   // },

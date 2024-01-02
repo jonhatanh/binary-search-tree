@@ -206,6 +206,22 @@ export default class Tree {
     return nodes;
   }
 
+  height(node) {
+    if (node === null) {
+      return 0;
+    }
+  }
+  depth(value) {
+    if(!this.find(value)) return null;
+    let auxNode = this.#root;
+    let depth = 0;
+    while(auxNode !== null && auxNode.value !== value) {
+      auxNode = value < auxNode.value ? auxNode.left : auxNode.right;
+      depth++;
+    }
+    return depth;
+  }
+
   static prettyPrint(node, prefix = "", isLeft = true) {
     if (node === null) {
       return;
