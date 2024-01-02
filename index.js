@@ -63,6 +63,7 @@ const optionsMap = {
   },
   4() {
     const nodes = tree.levelOrder();
+    // const nodes = tree.recursiveLevelOrder();
     nodes.forEach(node => {
       process.stdout.write(chalk.yellow(node.value + " "));
     })

@@ -168,6 +168,22 @@ export default class Tree {
     return nodes;
   }
 
+  recursiveLevelOrder() {
+    if(!this.#root) return [];
+    const nodesQueue = new Queue();
+    nodesQueue.add(this.#root);
+    return this.#recursiveLvlOrder(nodesQueue);
+  }
+
+  #recursiveLvlOrder(queue, nodes = []) {
+    if(queue.empty()) return nodes;
+    const currentNode = queue.remove();
+    queue.add(currentNode.left);
+    queue.add(currentNode.right);
+    nodes.push(currentNode);
+    return this.#recursiveLvlOrder(queue, nodes);
+  }
+
   static prettyPrint(node, prefix = "", isLeft = true) {
     if (node === null) {
       return;
