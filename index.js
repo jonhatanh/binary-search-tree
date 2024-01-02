@@ -5,9 +5,13 @@ import Tree from "./Tree.js";
 const log = console.log;
 const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 const getMenu = () => {
+  let treeInOrder = "";
+  tree.inOrder().forEach((node) => {
+    treeInOrder += `${node.value} `;
+  })
   return `
 ${chalk.white.bgBlue("-- BST Options --")}
-${chalk.bold("BST array")}: ${chalk.blue("---")}
+${chalk.bold("BST array")}: ${chalk.blue(treeInOrder)}
 1.- insert.
 2.- delete.
 3.- find.
@@ -106,6 +110,19 @@ const optionsMap = {
   //     ? log(chalk.yellow("The item exists in the list"))
   //     : log(chalk.red("The item doesn't exists in the list"));
   // },
+  8() {
+    const value = toNumber(readlineSync.question("Node value: "));
+    if (value === null) {
+      log(chalk.red("Wrong input, please enter a valid number"));
+      return;
+    }
+    const height = tree.height(value);
+    if (height === null) {
+      log(chalk.red("Item not found"));
+      return;
+    }
+    log(chalk.yellow(`The item height is: ${height}`));
+  },
   9() {
     const value = toNumber(readlineSync.question("Node value: "));
     if (value === null) {
@@ -117,7 +134,7 @@ const optionsMap = {
       log(chalk.red("Item not found"));
       return;
     }
-    log(chalk.yellow(`The item is at depth: ${depth}`));
+    log(chalk.yellow(`The item depth is: ${depth}`));
   },
   // 10() {
   //   log(chalk.yellow(list.toString()));

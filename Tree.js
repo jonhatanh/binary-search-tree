@@ -47,7 +47,6 @@ export default class Tree {
     if (position === "root") return this.#deleteRoot();
 
     const child = parent[position];
-    console.log(child.value, parent.value);
 
     if (this.#isLeaf(child)) {
       parent[position] = null;
@@ -206,10 +205,19 @@ export default class Tree {
     return nodes;
   }
 
-  height(node) {
-    if (node === null) {
-      return 0;
-    }
+  height(value) {
+    const node = this.find(value)
+    if(!node) return null;
+    return this.#recursiveHeight(node);
+  }
+  #recursiveHeight(node) {
+    if(node === null) return 0;
+    if(this.#isLeaf(node)) return 0;
+
+    const leftChildHeight = this.#recursiveHeight(node.left);
+    const rightChildHeight = this.#recursiveHeight(node.right);
+    const biggestHeight = leftChildHeight > rightChildHeight ? leftChildHeight : rightChildHeight;
+    return biggestHeight + 1;
   }
   depth(value) {
     if(!this.find(value)) return null;
