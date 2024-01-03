@@ -11,7 +11,7 @@ const getMenu = () => {
   })
   return `
 ${chalk.white.bgBlue("-- BST Options --")}
-${chalk.bold("BST array")}: ${chalk.blue(treeInOrder)}
+${chalk.bold("BST inOrder")}: ${chalk.blue(treeInOrder)}
 1.- insert.
 2.- delete.
 3.- find.
@@ -136,9 +136,10 @@ const optionsMap = {
     }
     log(chalk.yellow(`The item depth is: ${depth}`));
   },
-  // 10() {
-  //   log(chalk.yellow(list.toString()));
-  // },
+  10() {
+    const isBalanced = tree.isBalanced();
+    log(chalk.yellow(isBalanced[0]));
+  },
   // 11() {
   //   const value = readlineSync.question("Value: ");
   //   const index = readlineSync.question("At index: ");

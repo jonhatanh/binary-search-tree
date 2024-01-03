@@ -216,8 +216,7 @@ export default class Tree {
 
     const leftChildHeight = this.#recursiveHeight(node.left);
     const rightChildHeight = this.#recursiveHeight(node.right);
-    const biggestHeight = leftChildHeight > rightChildHeight ? leftChildHeight : rightChildHeight;
-    return biggestHeight + 1;
+    return Math.max(leftChildHeight, rightChildHeight) + 1;
   }
   depth(value) {
     if(!this.find(value)) return null;
@@ -228,6 +227,19 @@ export default class Tree {
       depth++;
     }
     return depth;
+  }
+
+  isBalanced(root = this.#root) {
+    if(root === null) {
+      return [true, -1];
+    }
+
+    const [leftIsBalanced, leftHeight] = this.isBalanced(root.left);
+    const [rightIsBalanced, rightHeight] = this.isBalanced(root.right);
+    const currentNodeHeight = Math.max(leftHeight, rightHeight) + 1;
+    if(!leftIsBalanced || !rightIsBalanced) return [false, currentNodeHeight];
+    const nodeIsBalanced = !(Math.abs(leftHeight - rightHeight) > 1);
+    return [nodeIsBalanced, currentNodeHeight];
   }
 
   static prettyPrint(node, prefix = "", isLeft = true) {
