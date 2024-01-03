@@ -6,9 +6,9 @@ const log = console.log;
 const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 const getMenu = () => {
   let treeInOrder = "";
-  tree.inOrder().forEach((node) => {
+  tree.inOrder()?.forEach((node) => {
     treeInOrder += `${node.value} `;
-  })
+  });
   return `
 ${chalk.white.bgBlue("-- BST Options --")}
 ${chalk.bold("BST inOrder")}: ${chalk.blue(treeInOrder)}
@@ -72,44 +72,22 @@ const optionsMap = {
   },
   5() {
     const nodes = tree.inOrder();
-    nodes.forEach((node) => {
+    nodes?.forEach((node) => {
       process.stdout.write(chalk.yellow(node.value + " "));
     });
   },
   6() {
     const nodes = tree.preOrder();
-    nodes.forEach((node) => {
+    nodes?.forEach((node) => {
       process.stdout.write(chalk.yellow(node.value + " "));
     });
   },
   7() {
     const nodes = tree.postOrder();
-    nodes.forEach((node) => {
+    nodes?.forEach((node) => {
       process.stdout.write(chalk.yellow(node.value + " "));
     });
   },
-  // 6() {
-  //   const index = readlineSync.question("Node index: ");
-  //   const numberIndex = Number(index);
-  //   if (Number.isNaN(numberIndex)) {
-  //     log(chalk.red("Invalid index"));
-  //     return;
-  //   }
-  //   const node = list.at(numberIndex);
-  //   node === null
-  //     ? log(chalk.red("Invalid index"))
-  //     : log(chalk.yellow(node.value));
-  // },
-  // 7() {
-  //   list.pop();
-  //   log(chalk.yellow("Item Removed"));
-  // },
-  // 8() {
-  //   const value = readlineSync.question("Node value: ");
-  //   list.contains(value)
-  //     ? log(chalk.yellow("The item exists in the list"))
-  //     : log(chalk.red("The item doesn't exists in the list"));
-  // },
   8() {
     const value = toNumber(readlineSync.question("Node value: "));
     if (value === null) {
@@ -140,24 +118,19 @@ const optionsMap = {
     const isBalanced = tree.isBalanced();
     log(chalk.yellow(isBalanced[0]));
   },
-  // 11() {
-  //   const value = readlineSync.question("Value: ");
-  //   const index = readlineSync.question("At index: ");
-  //   list.insertAt(value, index);
-  //   log(chalk.yellow("Item Added"));
-  // },
+  11() {
+    const rebalanced = tree.rebalance();
+    rebalanced
+      ? log(chalk.magenta("Rebalanced!"))
+      : log(chalk.red("The tree is balanced"));
+  },
   12() {
     Tree.prettyPrint(tree.root);
-    // const index = readlineSync.question("At index: ");
-    // const removed = list.removeAt(index);
-    // removed
-    //   ? log(chalk.yellow("Item Removed"))
-    //   : log(chalk.red("Invalid Index"));
   },
-  // 13() {
-  //   list.clear();
-  //   log(chalk.red.bgMagenta('Done!'))
-  // }
+  13() {
+    tree.clear();
+    log(chalk.red.bgMagenta("Done!"));
+  },
 };
 
 while (exit === false) {

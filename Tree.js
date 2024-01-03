@@ -8,6 +8,18 @@ export default class Tree {
     Tree.prettyPrint(this.#root);
   }
 
+  rebalance() {
+    if(this.isBalanced()[0]) return false;
+    const treeNodes = this.inOrder();
+    this.#root = this.#buildTree(treeNodes.map(node => node.value));
+    Tree.prettyPrint(this.#root);
+    return true;
+  }
+
+  clear() {
+    this.#root = null;
+  }
+
   get root() {
     return this.#root;
   }
